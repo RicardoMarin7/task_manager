@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
     const [login,setLogin] = useState({
@@ -24,11 +25,15 @@ const Login = () => {
         }
     }
 
+    const handleSubmit = e =>{
+        e.preventDefault()
+    }
+
     return(
         <div className="form-usuario">
             <div className="contenedor-form sombra-dark">
                 <h1>Inicia sesion con tu cuenta</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="campo-form">
                         <label htmlFor="email">Email</label>
                         <input 
@@ -51,6 +56,12 @@ const Login = () => {
                         />
                         {showPassword ? <i className="fas fa-eye-slash icon-password" onClick={handleClick}></i> : <i className="fas fa-eye" onClick={handleClick}></i> }
                     </div>
+
+                    <div className="campo-form">
+                        <button className="btn-primario btn btn-block">Iniciar Sesion</button>
+                    </div>
+
+                    <Link to="/new-account" className="enlace-cuenta">Aun no tienes una cuenta? Registrate</Link>
                 </form>
             </div>
         </div>
