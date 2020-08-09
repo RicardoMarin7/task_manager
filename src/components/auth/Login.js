@@ -54,7 +54,7 @@ const Login = () => {
                             onChange={handleChange}
                             placeholder="Password"
                         />
-                        {showPassword ? <i className="fas fa-eye-slash icon-password" onClick={handleClick}></i> : <i className="fas fa-eye" onClick={handleClick}></i> }
+                        {showPassword ? <i className="fas fa-eye-slash icon-password" onClick={handleClick}></i> : <i className="fas fa-eye icon-password" onClick={handleClick}></i> }
                     </div>
 
                     <div className="campo-form">
