@@ -7,7 +7,7 @@ const Project = ({proyecto}) =>{
             <button
                 type="button"
                 className="btn btn-blank"
-            >{proyecto.nombre}</button>
+            >{proyecto.name}</button>
         </li>
     )
 }

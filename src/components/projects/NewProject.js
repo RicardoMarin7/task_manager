@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import ProjectContext from '../../context/projects/projectContext'
+
+
 
 const NewProject = () =>{
+
+    //State form
+    const projectContext = useContext(ProjectContext)
+    const { formNewProject, showForm, addProject, errorForm, showError } = projectContext
+
+
     //Project state for save
     const [project,setProject] = useState({
-        name:'',
-        id:''
+        name:''
     })
     
     //Extract name from the state
@@ -23,10 +31,23 @@ const NewProject = () =>{
         e.preventDefault()
 
         // Validate project
+        if(name === ''){
+            showError()
+            return
+        }
 
         //add to state
+        addProject(project)
+
 
         //Reset the form
+        setProject({
+            name:''
+        })
+    }
+
+    const handleClick = () =>{
+        showForm()
     }
 
     return(
@@ -35,11 +56,13 @@ const NewProject = () =>{
             <button
                 type="button"
                 className="btn btn-block btn-primario"
+                onClick={handleClick}
             >Nuevo Proyecto</button>
 
-            <form 
+            {formNewProject ? (
+                <form 
                 className="formulario-nuevo-proyecto"
-                onSubmit={handleSubmit}
+                onSubmit={ handleSubmit }
             >
                 <input 
                     type="text"
@@ -51,6 +74,11 @@ const NewProject = () =>{
                 />
                 <button className="btn btn-block btn-primario">Agregar Proyecto</button>
             </form>
+            ) : (
+                null
+            )}
+
+            { errorForm ? <p className="mensaje error">El nombre del proyecto es obligatorio</p> : null}
         </React.Fragment>
     )
 }
