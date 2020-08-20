@@ -1,21 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Task from './Task'
+import ProjectContext from '../../context/projects/projectContext'
+import TaskContext from '../../context/tasks/taskContext'
 
-const TaskList = () =>{
+const TaskList = () =>{  
 
-    const tasks = [
-        {name:'Crear pagina',state:true},
-        {name:'Crear componente',state:true},
-        {name:'Hacer que exporte a pdf',state:false},
-        {name:'Crear estilos form',state:false}
-    ]
+    const projectContext = useContext(ProjectContext)
+    const { project, deleteProject } = projectContext
+
+    const taskContext = useContext(TaskContext)
+    const { projectTasks } = taskContext
+
+    if(!project){
+        return <h2>No hay ningun proyecto seleccionado</h2>
+    }
+
+    const [actualProject] = project
+
+    const handleClick = e =>{
+        deleteProject(actualProject.id)
+    }
+
+    
 
     return(
         <React.Fragment>
-            <h2>Proyecto: <span>Mallatex</span></h2>
+            <h2>Proyecto: <span>{actualProject.name}</span></h2>
             <ul className="listado-tareas">
-                {tasks.map( task =>(
-                    <Task task={task}/>
+                {projectTasks.map( task =>(
+                    <Task 
+                        task={task}
+                    />
                 ))}
                 
             </ul>
@@ -23,6 +38,7 @@ const TaskList = () =>{
             <button 
                 type="button"
                 className="btn btn-eliminar"
+                onClick={handleClick}
             >Eliminar Proyecto &times;</button>
         </React.Fragment>
     )

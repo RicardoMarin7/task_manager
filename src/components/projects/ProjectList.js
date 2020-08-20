@@ -21,6 +21,7 @@ const ProjectList = () => {
             {projects.map( proyecto =>(
                 <Project 
                     proyecto={proyecto}
+                    key = {proyecto.id}
                 />
             ))}
         </ul>

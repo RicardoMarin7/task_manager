@@ -8,7 +8,9 @@ import {
     FORMULARIO_PROYECTO,
     GET_PROJECTS,
     ADD_PROJECT,
-    VALIDATE_FORM
+    VALIDATE_FORM,
+    ACTUAL_PROJECT,
+    DELETE_PROJECT
 } from '../../types'
 
 
@@ -27,13 +29,15 @@ const ProjectState = props => {
     const initialState = {
         projects:[],
         formNewProject : false,
-        errorForm : false
+        errorForm : false,
+        project : null
     }
 
     //Dispatch to execute actions
     const [state,dispatch] = useReducer(projectReducer,initialState)
 
     //Funciones para el CRUD
+    // Cambia el estado de el formulario de proyecto
     const showForm = () =>{
         let form = false
         if(state.formNewProject){
@@ -49,14 +53,15 @@ const ProjectState = props => {
         })
     }
 
+    //Obtiene todos los proyectos
     const getProjects = () =>{
-        console.log("me ejecute bro")
         dispatch({
             type:GET_PROJECTS,
             payload: projects
         })
     }
 
+    //Add project to state
     const addProject = project =>{
         project.id = uuid()
         dispatch({
@@ -65,9 +70,26 @@ const ProjectState = props => {
         })
     }
 
+    //Muestra el error
     const showError = () =>{
         dispatch({
             type:VALIDATE_FORM,
+        })
+    }
+
+    //Selecciona el proyecto que el usuario le dio click
+    const actualProject = projectID =>{
+        dispatch({
+            type:ACTUAL_PROJECT,
+            payload: projectID
+        })
+    }
+
+    //Delete project
+    const deleteProject = projectID =>{
+        dispatch({
+            type:DELETE_PROJECT,
+            payload: projectID
         })
     }
 
@@ -80,10 +102,13 @@ const ProjectState = props => {
             formNewProject: state.formNewProject,
             projects:state.projects,
             errorForm: state.errorForm,
+            project:state.project,
             showForm,
             getProjects,
             addProject,
-            showError
+            showError,
+            actualProject,
+            deleteProject
 
         }}>
             {props.children}
